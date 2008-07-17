@@ -11,7 +11,13 @@
 #  updated_at    :datetime
 #
 class Rating < ActiveRecord::Base
-  validates_presence_of :rateable_type, :rateable_id
+  validates_presence_of     :rateable_type, :rateable_id
+  validates_numericality_of :value
+  validate                  :maximum_value_is_not_breached
+  
+  def maximum_value_is_not_breached
+    errors.add('value', 'is not in the range') unless self.rateable.rating_range.include?(self.value)
+  end
   
   belongs_to :rateable, :polymorphic => true
 end

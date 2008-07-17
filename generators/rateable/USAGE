@@ -3,3 +3,7 @@ script/generate ratable
 User model:
   add:
     has_many :ratings, :dependent => :nullify
+    
+CSS:
+  add:
+    CSS from http://www.komodomedia.com/samples/ratings.htm

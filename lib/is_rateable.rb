@@ -18,8 +18,26 @@ module IsRateable
       Rating.average(:value) || 0
     end
     
+    def rating_range
+      0..self.maximum_rating_allowed
+    end
+    
     def add_rating(value)
       self.ratings.create!(:value => value)
+    end
+  end
+  
+  module ViewMethods
+    def render_rating(object, type=:simple, units="stars")
+      case type
+      when :simple
+        "#{object.rating}/#{object.maximum_rating_allowed} #{units}"
+      when :stars
+        content_tag(:ul) do
+          object.rating_range
+            content_tag :li, "1", :class => "one-star", :class => "Rate this 1 star out of 5"
+        end
+      end
     end
   end
 end
