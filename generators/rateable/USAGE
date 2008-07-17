@@ -1,0 +1,5 @@
+script/generate ratable
+
+User model:
+  add:
+    has_many :ratings, :dependent => :nullify
