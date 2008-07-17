@@ -6,6 +6,9 @@ class RateableGenerator < Rails::Generator::Base
       unless options[:skip_migration]
         m.migration_template  'migration.rb', 'db/migrate', :migration_file_name => 'create_ratings'
       end
+      
+      # images
+      # css
     end
   end
   
