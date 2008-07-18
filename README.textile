@@ -1,6 +1,8 @@
 h1. is_rateable
 
-Introduction goes here.
+Currently star buttons are a put request, not a post request like they should be due to time constraints. Should be fixed in a future version. 
+
+Patches welcome! I do test my own stuff but until 
 
 h2. Usage
 
