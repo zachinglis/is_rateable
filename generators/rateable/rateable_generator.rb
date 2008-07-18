@@ -7,8 +7,10 @@ class RateableGenerator < Rails::Generator::Base
         m.migration_template  'migration.rb', 'db/migrate', :migration_file_name => 'create_ratings'
       end
       
-      # images
-      # css
+      unless options[:skip_five_star]
+        m.template  'stylesheet.css',   'public/stylesheets/rating.css'
+        m.template  'star-matrix.gif',  'public/images/star-matrix.gif'
+      end
     end
   end
   
@@ -17,6 +19,8 @@ protected
     opt.seperator ''
     opt.seperator 'Options'
     opt.on("--skip-migration",
-      "Don't generate a migration file for this model")           { |v| options[:skip_migration] = false }
+      "Don't generate a migration file for this model")                 { |v| options[:skip_migration] = false }
+    opt.on("--skip-five-star",
+      "Don't generate the images and style for the star rating system") { |v| options[:skip-five-star] = false }
   end
 end

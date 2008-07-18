@@ -25,16 +25,16 @@ module IsRateable
     end
     
     def rating_range
-      0..self.maximum_rating_allowed
+      1..self.maximum_rating_allowed
     end
     
-    def add_rating(value)
-      self.ratings.create!(:value => value)
+    def add_rating(value, options={})
+      self.ratings.create({ :value => value }.merge(options))
     end
     
     def rating_in_words
       case self.rating
-      when 0 
+      when 0
         "no"
       when 1
         "one"

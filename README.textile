@@ -2,19 +2,36 @@ h1. is_rateable
 
 Currently star buttons are a put request, not a post request like they should be due to time constraints. Should be fixed in a future version. 
 
-Patches welcome! I do test my own stuff but until 
+Patches welcome! I do test my own stuff but until I find a nice and easy way to include rspec in plugins, they won't come with the specs.
 
 h2. Usage
 
-is_rateable :upto => 5
+<code>
+  <pre>
+    is_rateable :upto => 5 # it defaults :upto => 5
+  </pre>
+</code>
 
-render_rating(@book, "stars")
+<code>
+  <pre>
+    render_rating(@book, "stars")
+  </pre>
+</code>
 
-h2. Requirements
+If a user rates more than twice, it will delete their older rating and put up a new rating.
 
-* Need to be able to pull rating from model and receive 0 score if no rating
-* Need to be able to add rating to a model and update the rating
-* Need to be able to render rating in view easily
+Add a method to your controller like so:
+<code>
+  <pre>
+    def rate
+      @book = Book.find(params[:id])
+      unless @book.add_rating(params[:rating].to_i, :ip => request.remote_ip)
+        flash[:notice] = "You have already voted on this book"
+      end
+      redirect_to @book
+    end
+  </pre>
+</code>
 
 h2. Credits
 

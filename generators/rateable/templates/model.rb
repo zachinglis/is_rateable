@@ -12,13 +12,26 @@
 #  updated_at    :datetime
 #
 class Rating < ActiveRecord::Base
+  belongs_to                :rateable, :polymorphic => true
+
   validates_presence_of     :rateable_type, :rateable_id
   validates_numericality_of :value
   validate                  :maximum_value_is_not_breached
-  
+    
   def maximum_value_is_not_breached
     errors.add('value', 'is not in the range') unless self.rateable.rating_range.include?(self.value)
   end
   
-  belongs_to :rateable, :polymorphic => true
+  before_save               :delete_last_rating
+  
+  def delete_last_rating
+    if (rating = Rating.find_similar(self))
+      rating.destroy
+    end
+  end
+  
+  def self.find_similar(rating)
+    Rating.find(:first, :conditions => { :ip => rating.ip, :user_id => rating.user_id,
+                                                      :rateable_id => rating.rateable_id, :rateable_type => rating.rateable_type })
+  end
 end
