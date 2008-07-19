@@ -6,21 +6,26 @@ Patches welcome! I do test my own stuff but until I find a nice and easy way to 
 
 h2. Usage
 
+To install, type <code>script/generate rateable</code>
+
+In your model.
 <code>
   <pre>
     is_rateable :upto => 5 # it defaults :upto => 5
   </pre>
 </code>
 
+In your view.
 <code>
   <pre>
-    render_rating(@book, "stars")
+    render_rating(@book, :interactive_stars)
+    render_rating(@book) # If you want to also see 1/5 Stars
   </pre>
 </code>
 
 If a user rates more than twice, it will delete their older rating and put up a new rating.
 
-Add a method to your controller like so:
+Add a method to your books_controller like so:
 <code>
   <pre>
     def rate
@@ -32,6 +37,10 @@ Add a method to your controller like so:
     end
   </pre>
 </code>
+
+h2. Todo
+
+* Annotate methods
 
 h2. Credits
 
