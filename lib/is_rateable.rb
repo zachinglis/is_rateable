@@ -17,7 +17,7 @@ module IsRateable
 
   module InstanceMethods
     def rating
-      if (rating = Rating.average(:value))
+      if (rating = self.ratings.average(:value))
         rating.round
       else
         0
