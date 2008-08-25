@@ -55,21 +55,17 @@ module IsRateable
     def rating_url(record, value)
       url_for :controller => record.class.to_s.downcase.pluralize, :id => record.to_param, :action => "rate", :rating => value, :method => :put
     end
-    
+
     def render_rating(record, type=:simple, units="star")
-      units = units.pluralize unless record.rating == 1
-      
+
       case type
       when :simple
-        "#{record.rating}/#{record.maximum_rating_allowed} #{units}"
+        "#{record.rating}/#{record.maximum_rating_allowed} #{pluralize(record.rating, units)}"
       when :interactive_stars
         content_tag(:ul, :class =>  "rating #{record.rating_in_words}star") do
-          content_tag(:li, content_tag(:a, "1", :href => rating_url(record, 1), :title => "Rate this 1 #{units} out of #{record.maximum_rating_allowed}"), :class => "one") +
-          content_tag(:li, content_tag(:a, "2", :href => rating_url(record, 2), :title => "Rate this 2 #{units} out of #{record.maximum_rating_allowed}"), :class => "two") +
-          content_tag(:li, content_tag(:a, "3", :href => rating_url(record, 3), :title => "Rate this 3 #{units} out of #{record.maximum_rating_allowed}"), :class => "three") +
-          content_tag(:li, content_tag(:a, "4", :href => rating_url(record, 4), :title => "Rate this 4 #{units} out of #{record.maximum_rating_allowed}"), :class => "four") +
-          content_tag(:li, content_tag(:a, "5", :href => rating_url(record, 5), :title => "Rate this 5 #{units} out of #{record.maximum_rating_allowed}"), :class => "five")
-        end
+          (1..maximum_rating_allowed).map do |i|
+            content_tag(:li, content_tag(:a, i.to_s, :href => rating_url(record, 1), :title => "Rate this #{i.to_s} #{pluralize(i, units)} out of #{record.maximum_rating_allowed}"), :class => "rating-#{i}")
+        end.join("\n")
       end
     end
   end

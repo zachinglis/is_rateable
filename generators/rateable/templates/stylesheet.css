@@ -33,11 +33,11 @@ ul.rating li a {
 	text-decoration:none;
 	z-index: 200;
 }
-ul.rating li.one a {left:0}
-ul.rating li.two a {left:16px;}
-ul.rating li.three a {left:32px;}
-ul.rating li.four a {left:48px;}
-ul.rating li.five a {left:64px;}
+ul.rating li.rating-1 a {left:0}
+ul.rating li.rating-2 a {left:16px;}
+ul.rating li.rating-3 a {left:32px;}
+ul.rating li.rating-4 a {left:48px;}
+ul.rating li.rating-5 a {left:64px;}
 ul.rating li a:hover {
 	z-index:2;
 	width:80px;
@@ -46,8 +46,8 @@ ul.rating li a:hover {
 	left:0;	
 	background: url(/images/star-matrix.gif) no-repeat 0 0
 }
-ul.rating li.one a:hover {background-position:0 -96px;}
-ul.rating li.two a:hover {background-position:0 -112px;}
-ul.rating li.three a:hover {background-position:0 -128px}
-ul.rating li.four a:hover {background-position:0 -144px}
-ul.rating li.five a:hover {background-position:0 -160px}
+ul.rating li.rating-1 a:hover {background-position:0 -96px;}
+ul.rating li.rating-2 a:hover {background-position:0 -112px;}
+ul.rating li.rating-3 a:hover {background-position:0 -128px;}
+ul.rating li.rating-4 a:hover {background-position:0 -144px;}
+ul.rating li.rating-5 a:hover {background-position:0 -160px;}
