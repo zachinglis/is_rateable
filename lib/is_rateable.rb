@@ -9,6 +9,7 @@ module IsRateable
       has_many :ratings, :as => :rateable
       
       cattr_accessor :maximum_rating_allowed
+      self.minimum_rating_allowed = options[:from] || 0
       self.maximum_rating_allowed = options[:upto] || 5
       
       ActionController::Routing::Routes.add_route('/:controller/:id/rate/:rating', :action => 'rate', :method => :put)
@@ -25,7 +26,7 @@ module IsRateable
     end
     
     def rating_range
-      1..self.maximum_rating_allowed
+      self.minimum_rating_allowed..self.maximum_rating_allowed
     end
     
     def add_rating(value, options={})
@@ -63,7 +64,7 @@ module IsRateable
         "#{record.rating}/#{record.maximum_rating_allowed} #{pluralize(record.rating, units)}"
       when :interactive_stars
         content_tag(:ul, :class =>  "rating #{record.rating_in_words}star") do
-          (1..maximum_rating_allowed).map do |i|
+          (minimum_rating_allowed..maximum_rating_allowed).map do |i|
             content_tag(:li, content_tag(:a, i.to_s, :href => rating_url(record, 1), :title => "Rate this #{i.to_s} #{pluralize(i, units)} out of #{record.maximum_rating_allowed}"), :class => "rating-#{i}")
         end.join("\n")
       end
