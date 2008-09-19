@@ -12,6 +12,7 @@
 #
 class Rating < ActiveRecord::Base
   belongs_to                :rateable, :polymorphic => true
+  <% if options[:by_user] %>belongs_to                :user<% end %>
 
   validates_presence_of     :rateable_type, :rateable_id
   validates_numericality_of :value
