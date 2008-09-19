@@ -6,7 +6,11 @@ Patches welcome! I do test my own stuff but until I find a nice and easy way to 
 
 h2. Usage
 
-To install, type <code>script/generate rateable</code>
+To install, type <code>script/generate rateable [--by_user]</code>
+
+h3. Options
+
+--by-user will associate your ratings to a user model.  Hopefully you've got one already.
 
 In your model.
 <code>

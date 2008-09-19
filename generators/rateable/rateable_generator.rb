@@ -22,5 +22,7 @@ protected
       "Don't generate a migration file for this model")                 { |v| options[:skip_migration] = false }
     opt.on("--skip-five-star",
       "Don't generate the images and style for the star rating system") { |v| options[:skip_five_star] = false }
+    opt.on("--by-user",
+      "Generate and display ratings per user")                          { |v| options[:by_user] = true }
   end
 end
