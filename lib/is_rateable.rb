@@ -29,7 +29,7 @@ module IsRateable
       minimum_rating_allowed..maximum_rating_allowed
     end
     
-    def add_rating(value, options={})
+    def rate(value, options={})
       ratings.create({ :value => value }.merge(options))
     end
     
