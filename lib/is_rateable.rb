@@ -60,14 +60,13 @@ module IsRateable
     end
 
     def render_rating(record, type=:simple, units="star")
-
       case type
       when :simple
         "#{record.rating}/#{record.maximum_rating_allowed} #{pluralize(record.rating, units)}"
       when :interactive_stars
         content_tag(:ul, :class =>  "rating #{record.rating_in_words}star") do
           (minimum_rating_allowed..maximum_rating_allowed).map do |i|
-            content_tag(:li, content_tag(:a, i.to_s, :href => rating_url(record, 1), :title => "Rate this #{i.to_s} #{pluralize(i, units)} out of #{record.maximum_rating_allowed}"), :class => "rating-#{i}")
+            content_tag(:li, content_tag(:a, i.to_s, :href => rating_url(record, i), :title => "Rate this #{i.to_s} #{pluralize(i, units)} out of #{record.maximum_rating_allowed}"), :class => "rating-#{i}")
         end.join("\n")
       end
     end
