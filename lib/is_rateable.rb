@@ -8,7 +8,7 @@ module IsRateable
       include InstanceMethods
       has_many :ratings, :as => :rateable
       
-      cattr_accessor :minium_rating_allowed, :maximum_rating_allowed
+      cattr_accessor :minimum_rating_allowed, :maximum_rating_allowed
       self.minimum_rating_allowed = options[:from] || 0
       self.maximum_rating_allowed = options[:upto] || 5
       
