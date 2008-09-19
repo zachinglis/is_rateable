@@ -15,6 +15,7 @@ class Rating < ActiveRecord::Base
 
   validates_presence_of     :rateable_type, :rateable_id
   validates_numericality_of :value
+  <% if options[:by_user] %>validates_presence_of     :user<% end %>
   validate                  :maximum_value_is_not_breached
     
   def maximum_value_is_not_breached
