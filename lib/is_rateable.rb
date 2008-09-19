@@ -9,10 +9,9 @@ module IsRateable
       has_many :ratings, :as => :rateable
       
       cattr_accessor :minimum_rating_allowed, :maximum_rating_allowed
-      self.minimum_rating_allowed = options[:from] || 0
+      self.minimum_rating_allowed = options[:from] || 1
       self.maximum_rating_allowed = options[:upto] || 5
       
-      ActionController::Routing::Routes.add_route('/:controller/:id/rate/:rating', :action => 'rate', :method => :put)
     end
   end
 
@@ -56,7 +55,7 @@ module IsRateable
   module ViewMethods
     # polymorphic url sucks big time. unfortunately I ended up having to create a method to do this.
     def rating_url(record, value)
-      url_for :controller => record.class.to_s.downcase.pluralize, :id => record.to_param, :action => "rate", :rating => value, :method => :put
+      url_for :controller => record.class.to_s.downcase.pluralize, :id => record.to_param, :action => "rate", :rating => value
     end
 
     def render_rating(record, type=:simple, units="star")
@@ -65,8 +64,8 @@ module IsRateable
         "#{record.rating}/#{record.maximum_rating_allowed} #{pluralize(record.rating, units)}"
       when :interactive_stars
         content_tag(:ul, :class =>  "rating #{record.rating_in_words}star") do
-          (minimum_rating_allowed..maximum_rating_allowed).map do |i|
-            content_tag(:li, content_tag(:a, i.to_s, :href => rating_url(record, i), :title => "Rate this #{i.to_s} #{pluralize(i, units)} out of #{record.maximum_rating_allowed}"), :class => "rating-#{i}")
+          (record.minimum_rating_allowed..record.maximum_rating_allowed).map do |i|
+            content_tag(:li, link_to(i, rating_url(record, i), :title => "Rate this #{pluralize(i, units)} out of #{record.maximum_rating_allowed}", :method => :put), :class => "rating-#{i}")
           end.join("\n")
         end
       end
