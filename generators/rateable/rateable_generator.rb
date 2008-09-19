@@ -15,12 +15,12 @@ class RateableGenerator < Rails::Generator::Base
   end
   
 protected
-  def add_option!(opt)
-    opt.seperator ''
-    opt.seperator 'Options'
+  def add_options!(opt)
+    opt.separator ''
+    opt.separator 'Options'
     opt.on("--skip-migration",
       "Don't generate a migration file for this model")                 { |v| options[:skip_migration] = false }
     opt.on("--skip-five-star",
-      "Don't generate the images and style for the star rating system") { |v| options[:skip-five-star] = false }
+      "Don't generate the images and style for the star rating system") { |v| options[:skip_five_star] = false }
   end
 end
