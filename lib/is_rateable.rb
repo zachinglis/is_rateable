@@ -47,6 +47,8 @@ module IsRateable
         "four"
       when 5
         "five"
+      else
+        rating.to_s
       end      
     end
   end
