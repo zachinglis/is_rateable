@@ -18,23 +18,23 @@ module IsRateable
 
   module InstanceMethods
     def rating
-      if (rating = self.ratings.average(:value))
+      if (rating = ratings.average(:value))
         rating.round
       else
         0
       end
     end
-    
+
     def rating_range
-      self.minimum_rating_allowed..self.maximum_rating_allowed
+      minimum_rating_allowed..maximum_rating_allowed
     end
     
     def add_rating(value, options={})
-      self.ratings.create({ :value => value }.merge(options))
+      ratings.create({ :value => value }.merge(options))
     end
     
     def rating_in_words
-      case self.rating
+      case rating
       when 0
         "no"
       when 1
@@ -50,7 +50,7 @@ module IsRateable
       end      
     end
   end
-  
+
   module ViewMethods
     # polymorphic url sucks big time. unfortunately I ended up having to create a method to do this.
     def rating_url(record, value)
