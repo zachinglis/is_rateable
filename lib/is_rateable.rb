@@ -4,6 +4,14 @@ module IsRateable
   end
   
   module ClassMethods
+    # Add this method to your model
+    #
+    #   is_rateable
+    #
+    # which specifies the maximum allowed units to be 5. To specify anything else do the following:
+    #
+    #   is_rateable :upto => 10
+    #
     def is_rateable(options={})
       include InstanceMethods
       has_many :ratings, :as => :rateable
