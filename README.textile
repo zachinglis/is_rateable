@@ -50,6 +50,8 @@ h2. Credits
 
 * "Zach Inglis":http://zachinglis.com
 * "Nathan Arnold":http://shorepound.net
+* "Les Hill":http://blog.leshill.org
+* "Matt Remsik":http://veez.us
 * "Tim Pope":http://www.tpope.net
 * "Rogie King":http://komodomedia.com - CSS for Stars
 * Some code from restful_authentication by "Rick Olson":http://activereload.com
