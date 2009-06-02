@@ -71,11 +71,23 @@ module IsRateable
       when :simple
         "#{record.rating}/#{record.maximum_rating_allowed} #{pluralize(record.rating, units)}"
       when :interactive_stars
-        content_tag(:ul, :class =>  "rating #{record.rating_in_words}star") do
+        content_tag(:ul, :class => "rating #{record.rating_in_words}star") do
           (record.minimum_rating_allowed..record.maximum_rating_allowed).map do |i|
             content_tag(:li, link_to(i, rating_url(record, i), :title => "Rate this #{pluralize(i, units)} out of #{record.maximum_rating_allowed}", :method => :put), :class => "rating-#{i}")
           end.join("\n")
         end
+      end
+    end
+
+    def render_ajax_rating(record)
+      content_tag(:ul, :class =>  "rating #{record.rating_in_words}star") do
+        (record.minimum_rating_allowed..record.maximum_rating_allowed).map do |i|
+          content_tag(:li, link_to_remote(i, 
+                      :url => { :controller => record.class.to_s.downcase.pluralize, :id => record.to_param, :action => "rate", :rating => i  },
+                      :loading => "Element.show('spinner')",
+                      :complete => { :success => "Element.show('success_rating')" }),
+                      :class => "rating-#{i}")
+        end.join("\n")
       end
     end
   end
