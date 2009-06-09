@@ -2,7 +2,7 @@ module IsRateable
   def self.included(base)
     base.extend(ClassMethods)
   end
-  
+
   module ClassMethods
     # Add this method to your model
     #
@@ -15,11 +15,11 @@ module IsRateable
     def is_rateable(options={})
       include InstanceMethods
       has_many :ratings, :as => :rateable
-      
+
       cattr_accessor :minimum_rating_allowed, :maximum_rating_allowed
       self.minimum_rating_allowed = options[:from] || 1
       self.maximum_rating_allowed = options[:upto] || 5
-      
+
     end
   end
 
@@ -35,11 +35,11 @@ module IsRateable
     def rating_range
       minimum_rating_allowed..maximum_rating_allowed
     end
-    
+
     def rate(value, options={})
       ratings.create({ :value => value }.merge(options))
     end
-    
+
     def rating_in_words
       case rating
       when 0
@@ -56,7 +56,7 @@ module IsRateable
         "five"
       else
         rating.to_s
-      end      
+      end
     end
   end
 
@@ -82,10 +82,9 @@ module IsRateable
     def render_ajax_rating(record)
       content_tag(:ul, :class =>  "rating #{record.rating_in_words}star") do
         (record.minimum_rating_allowed..record.maximum_rating_allowed).map do |i|
-          content_tag(:li, link_to_remote(i, 
+          content_tag(:li, link_to_remote(i,
                       :url => { :controller => record.class.to_s.downcase.pluralize, :id => record.to_param, :action => "rate", :rating => i  },
-                      :loading => "Element.show('spinner')",
-                      :complete => { :success => "Element.show('success_rating')" }),
+                      :loading => "Element.show('spinner')"),
                       :class => "rating-#{i}")
         end.join("\n")
       end
