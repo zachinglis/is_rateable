@@ -2,18 +2,19 @@ class RateableGenerator < Rails::Generator::Base
   def manifest
     record do |m|
       m.template            'model.rb', 'app/models/rating.rb'
-      
+
       unless options[:skip_migration]
         m.migration_template  'migration.rb', 'db/migrate', :migration_file_name => 'create_ratings'
       end
-      
+
       unless options[:skip_five_star]
         m.template  'stylesheet.css',   'public/stylesheets/rating.css'
         m.template  'star-matrix.gif',  'public/images/star-matrix.gif'
+        m.template  'spinner.gif',       'public/images/spinner.gif'
       end
     end
   end
-  
+
 protected
   def add_options!(opt)
     opt.separator ''
