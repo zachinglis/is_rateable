@@ -12,6 +12,7 @@ h3. Options
 
 --by-user will associate your ratings to a user model.  Hopefully you've got one already.
 
+h4. Without Ajax
 In your model.
 <code>
   <pre>
@@ -42,6 +43,62 @@ Add a method to your books_controller like so:
   </pre>
 </code>
 
+h4. Using Ajax
+You can use the same code for your model
+<code>
+  <pre>
+    is_rateable :upto => 5 # it defaults :upto => 5
+  </pre>
+</code>
+
+On your view, you need to call a partial
+<code>
+  <pre>
+    #Using html.erb
+      <div id="rating">
+        <%= render :partial => "books/rate", :locals => { :rateable => @book } %>
+      </div>
+
+    #Using haml 
+      #rating
+        render :partial => "books/rate", :locals => { :rateable => @book }
+  </pre>
+</code>
+
+Your partial will have a spinner and a div to be replaced when ajax is completed
+<code>
+  <pre>
+    #Using html.erb (views/books/_rate.html.erb)
+      <%= render_ajax_rating rateable %>
+      <%= image_tag "icons/spinner.gif", :id => :spinner, :style => "display: none;" %>
+      <div id="success_rating" style="display:none;">
+        Rated!
+      </div>
+
+    #Using haml (views/books/_rate.html.haml)
+
+      = render_ajax_rating rateable
+      = image_tag "icons/spinner.gif", :id => :spinner, :style => "display: none;"
+      #success_rating{:style => "display:none;"}
+        Rated!
+  </pre>
+</code>
+
+On your controller:
+<code>
+  <pre>
+    def rate
+        @book = Book.find(params[:id])
+        @book.rate params[:rating].to_i
+        render :update do |page|
+          page.replace_html("rating", {:partial => "rate", :locals => {:rateable => @book}})
+          page.show "success_rating"
+        end
+    end
+  </pre>
+</code>
+
+
 h2. Todo
 
 * Annotate methods
@@ -55,5 +112,9 @@ h2. Credits
 * "Tim Pope":http://www.tpope.net
 * "Rogie King":http://komodomedia.com - CSS for Stars
 * Some code from restful_authentication by "Rick Olson":http://activereload.com
+
+* Ajax Rating
+* "Willian Molinari":http://pothix.com/blog
+* "Mateus Linhares":http://github.com/mateuslinhares
 
 *Copyright (c) 2008 Zach Inglis, released under the MIT license*
