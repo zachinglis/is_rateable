@@ -44,6 +44,7 @@ Add a method to your books_controller like so:
 </code>
 
 h4. Using Ajax
+
 You can use the same code for your model
 <code>
   <pre>
@@ -113,7 +114,8 @@ h2. Credits
 * "Rogie King":http://komodomedia.com - CSS for Stars
 * Some code from restful_authentication by "Rick Olson":http://activereload.com
 
-* Ajax Rating
+h6. Ajax Rating
+
 * "Willian Molinari":http://pothix.com/blog
 * "Mateus Linhares":http://github.com/mateuslinhares
 
